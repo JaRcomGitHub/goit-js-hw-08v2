@@ -19,8 +19,10 @@ function onFormSubmit(evt) {
 
   evt.target.reset();
   localStorage.removeItem(STORAGE_KEY);
-
+  
   console.log(formData);
+  delete formData['email'];
+  delete formData['message'];
 }
 
 function onFormInput(evt) {
@@ -37,7 +39,13 @@ function restoreFormData() {
 
   if (savedData) {
     const parsedData = JSON.parse(savedData);
-    formEl.email.value = parsedData.email;
-    formEl.message.value = parsedData.message;
+    if (parsedData.email) {
+      formEl.email.value = parsedData.email;
+      formData['email'] = formEl.email.value;
+    }
+    if (parsedData.message) {
+      formEl.message.value = parsedData.message;
+      formData['message'] = formEl.message.value;
+    }
   }
 }
